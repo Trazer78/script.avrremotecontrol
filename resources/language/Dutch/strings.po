@@ -1,0 +1,94 @@
+# XBMC Media Center language file
+# Addon Name: Skin Widgets
+# Addon id: script.avrremote
+# Addon Provider: Trazer
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: trazer@gmail.com\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Trazer\n"
+"Language-Team: Trazer\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: nl\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+# Category "Device"
+msgctxt "#32001"
+msgid "Device"
+msgstr "Apparaat"
+
+msgctxt "#32002"
+msgid "IP address"
+msgstr "IP adres"
+
+msgctxt "#32003"
+msgid "Port number"
+msgstr "Poort nummer"
+
+msgctxt "#32004"
+msgid "Timeout (in seconds)"
+msgstr Timeout (in seconden)"
+
+msgctxt "#32005"
+msgid "Delay (in milliseconds)"
+msgstr "Wachttijd (in milliseconden)"
+
+msgctxt "#32006"
+msgid "Device"
+msgstr "Apparaat"
+
+# Category "Service"
+msgctxt "#32021"
+msgid "Service"
+msgstr ""
+
+msgctxt "#32022"
+msgid "Command when service starts"
+msgstr "Commando wanneer de service start"
+
+msgctxt "#32023"
+msgid "Command when service stops"
+msgstr "Commando wanneer de service stopt"
+
+# Category "Playback"
+msgctxt "#32041"
+msgid "Playback"
+msgstr "Afspelen"
+
+msgctxt "#32042"
+msgid "Command when playback starts"
+msgstr "Commando wanneer afspelen wordt gestart"
+
+msgctxt "#32043"
+msgid "Command when playback is paused"
+msgstr "Commando wanneer afspelen wordt gepauzeerd"
+
+msgctxt "#32044"
+msgid "Command when playback is resumed"
+msgstr "Commando wanneer afspelen wordt hervat"
+
+msgctxt "#32045"
+msgid "Command when playback has ended"
+msgstr "Commando wanneer afspelen is beëindigd"
+
+msgctxt "#32046"
+msgid "Command when playback is stopped"
+msgstr "Command wanneer afspelen wordt gestopt"
+
+# List of possible AVR Make and Models
+msgctxt "#32080"
+msgid "Pioneer VSX-923"
+msgstr ""
+
+msgctxt "#32081"
+msgid "Denon AVR-X2000"
+msgstr ""
+
+msgctxt "#32082"
+msgid "Denon AVR-E400"
+msgstr ""
+

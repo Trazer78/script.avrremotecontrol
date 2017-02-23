@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.avrremotecontrol" name="AVR Remote Control" version="0.0.1" provider-name="Trazer">
+	<requires>
+		<import addon="xbmc.python" version="2.7.12"/>
+		<import addon="xbmc.addon" version="12.0.0"/>
+        <import addon="xbmc.metadata" version="1.0"/>
+	</requires>
+	<extension point="xbmc.python.script" library="default.py">
+		<provides>executable</provides>
+	</extension>
+	<extension point="xbmc.service" library="service.py" start="startup"/>
+	<extension point="xbmc.addon.metadata">
+		<platform>all</platform>
+		<minversion />
+		<summary>AVR Remote Control</summary>
+		<description>This script offers the possibility of controlling AV Receivers via telnet protocol.</description>
+		<license>GNU GENERAL PUBLIC LICENSE Version 2, June 1991</license>
+		<source>https://github.com/Trazer78/script.avrremotecontrol</source>
+		<email />
+		<language />
+	</extension>
+</addon>

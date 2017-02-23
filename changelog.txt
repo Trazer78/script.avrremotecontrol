@@ -1,0 +1,9 @@
+
+v0.0.1
+Initial Release.
+- Service:
+  - run commands on:
+    - Service start/stop
+    - Playback start/paused/resumed/ended/stopped
+- Script/Module
+  - RunScript(script.avrremotecontrol,command=[COMMAND],command=[COMMAND|PARAM])
