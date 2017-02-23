@@ -1,4 +1,4 @@
-# AVRRemote add-on [![License](https://img.shields.io/badge/License-GPL%20v2%2B-blue.svg)](https://github.com/trazer78/script.avrremote/blob/master/LICENSE.txt)
+# AVR Remote Control add-on [![License](https://img.shields.io/badge/License-GPL%20v2%2B-blue.svg)](https://github.com/trazer78/script.avrremotecontrol/blob/master/LICENSE.txt)
 
 ## Supported devices
 - [Denon AVR X2000](/resources/help/Denon.md)
