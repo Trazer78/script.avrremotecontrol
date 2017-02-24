@@ -5,7 +5,7 @@
 - [Denon E400](/resources/help/Denon.md)
 - [Pioneer VSX-923](/resources/help/Pioneer.md)
 
-## Example commands
+## Module/Script Example commands
 
 ### Power
 ```
@@ -47,3 +47,14 @@ RunScript(script.avrremote,command=MUTE_TOGGLE)
 RunScript(script.avrremote,command=MUTE_QUERY)
 ```
 ### Input(s)
+
+## Service example commands
+```
+Setting: [command][|parameter];[command][|parameter]
+```
+```
+Setting: [command];[command][|parameter]
+```
+```
+Setting: [command];[command]
+```
