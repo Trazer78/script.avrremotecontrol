@@ -47,6 +47,12 @@ RunScript(script.avrremote,command=MUTE_TOGGLE)
 RunScript(script.avrremote,command=MUTE_QUERY)
 ```
 ### Input(s)
+```
+RunScript(script.avrremote,command=INPUT_CD)
+```
+```
+RunScript(script.avrremote,command=INPUT_CD,command=INPUT_DVD)
+```
 
 ## Service example commands
 ```
