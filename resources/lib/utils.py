@@ -45,8 +45,7 @@ def telnet_execute(command, withresponse=False):
         % (ipaddress, port, timeout, delay))
 
     try:
-        if withresponse:
-            _tn = telnetlib.Telnet(ipaddress, port, timeout)
+        _tn = telnetlib.Telnet(ipaddress, port, timeout)
     except Exception as exc:
         log_exception(__name__, exc)
         return "Error occured while connecting to AVR telnet server"
@@ -58,7 +57,7 @@ def telnet_execute(command, withresponse=False):
         time.sleep(delay)
         response = _tn.read_eager()
     else:
-        response = "sent without waiting for response"
+        response = "not waiting for a response"
     _tn.close()
 
     log_msg("(telnet_execute) Response: "+response, loglevel=xbmc.LOGNOTICE)

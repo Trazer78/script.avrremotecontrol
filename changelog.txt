@@ -1,9 +1,11 @@
+v0.0.2
+Fixes for Denon AVR-E400 and AVR-X2000
+Call telnet without waiting for response
 
 v0.0.1
 Initial Release.
-- Service:
-  - run commands on:
-    - Service start/stop
-    - Playback start/paused/resumed/ended/stopped
-- Script/Module
+Service can run command(s):
+ - Service: start/stop
+ - Playback: start/paused/resumed/ended/stopped
+Module/script can run custom command(s)
   - RunScript(script.avrremotecontrol,command=[COMMAND],command=[COMMAND|PARAM])
