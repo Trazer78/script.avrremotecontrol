@@ -11,30 +11,29 @@ import sys
 import xbmc
 import xbmcaddon
 from resources.lib.devices.avr_controller import AVRController
-from resources.lib.utils import log_msg, log_exception, ADDON_ID
+from resources.lib.utils import log_msg, ADDON_ID
 
 class ArcModule(object):
     ''' AVR Remote Control module implementation '''
 
     def __init__(self):
-        self.logprefix = "("+self.__class__.__name__+")"
+        self.logprefix = '(%s)' % self.__class__.__name__
 
         addon = xbmcaddon.Addon(ADDON_ID)
         self.addonversion = addon.getAddonInfo('version')
-        device = addon.getSetting("arc_device")
+        make = addon.getSetting("make")
+        model = addon.getSetting('%s_model' % make.lower())
 
-        log_msg("%s version %s entered" \
+        log_msg('%s version %s entered' \
             % (self.logprefix, self.addonversion), xbmc.LOGNOTICE)
 
         # Parse submitted arguments
         self._parse_argv()
 
         # Instantiate classes
-        self.avrcontroller = AVRController(device)
+        self.avrcontroller = AVRController(make, model)
 
         for command in self.commands:
-            log_msg(self.logprefix+' '+command, xbmc.LOGNOTICE)
-
             self.run_command(command)
 
         # Cleanup
@@ -54,19 +53,18 @@ class ArcModule(object):
     def run_command(self, command):
         ''' Run a command '''
 
-        pos = command.find('|')
-        if pos > -1:
-            cmd = command[:pos]
-            param = command[pos+1:]
+        if command.find('|') > -1:
+            action = command.split('|')
 
-            log_msg(self.logprefix+' '+cmd, xbmc.LOGNOTICE)
-            log_msg(self.logprefix+' '+param, xbmc.LOGNOTICE)
+            log_msg('%s.run_command. command: %s, parameter: %s' \
+                % (self.logprefix, action[0], action[1]), xbmc.LOGNOTICE)
 
-            self.avrcontroller.parse_command(cmd, param)
+            return self.avrcontroller.run_command(action[0], action[1])
         else:
-            self.avrcontroller.parse_command(command)
+            log_msg('%s.run_command. Command %s missing required parameter' \
+                % (self.logprefix, command), xbmc.LOGNOTICE)
 
     def close(self):
         ''' Cleanup '''
-        log_msg("%s version %s exited" \
+        log_msg('%s version %s exited' \
             % (self.logprefix, self.addonversion), xbmc.LOGNOTICE)

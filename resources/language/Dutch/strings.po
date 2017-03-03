@@ -22,24 +22,36 @@ msgid "Device"
 msgstr "Apparaat"
 
 msgctxt "#32002"
+msgid "Select AVR make and model"
+msgstr "Selecteer AVR merk en type"
+
+msgctxt "#32003"
+msgid "Make"
+msgstr "Merk"
+
+msgctxt "#32004"
+msgid "Model"
+msgstr "Type"
+
+msgctxt "#32005"
+msgid "Network settings"
+msgstr "Netwerk instellingen"
+
+msgctxt "#32006"
 msgid "IP address"
 msgstr "IP adres"
 
-msgctxt "#32003"
+msgctxt "#32007"
 msgid "Port number"
 msgstr "Poort nummer"
 
-msgctxt "#32004"
+msgctxt "#32008"
 msgid "Timeout (in seconds)"
-msgstr Timeout (in seconden)"
+msgstr "Timeout (in seconden)"
 
-msgctxt "#32005"
+msgctxt "#32009"
 msgid "Delay (in milliseconds)"
 msgstr "Wachttijd (in milliseconden)"
-
-msgctxt "#32006"
-msgid "Device"
-msgstr "Apparaat"
 
 # Category "Service"
 msgctxt "#32021"
@@ -47,12 +59,32 @@ msgid "Service"
 msgstr ""
 
 msgctxt "#32022"
-msgid "Command when service starts"
-msgstr "Commando wanneer de service start"
+msgid "Change AVR input on Kodi start/stop"
+msgstr "Verander AVR input bij start/stop van kodi"
 
 msgctxt "#32023"
-msgid "Command when service stops"
-msgstr "Commando wanneer de service stopt"
+msgid "Input when the service starts"
+msgstr "Input als de service start"
+
+msgctxt "#32024"
+msgid "Restore original input on service stop"
+msgstr "Herstel de originele input als de service stopt"
+
+msgctxt "#32025"
+msgid "Input when the service stops"
+msgstr "Input als de service stopt"
+
+msgctxt "#32026"
+msgid "Additional command(s) to run on service start/stop"
+msgstr "Extra commando(s) bij start/stop van de service"
+
+msgctxt "#32027"
+msgid "Service start"
+msgstr ""
+
+msgctxt "#32028"
+msgid "Service stop"
+msgstr ""
 
 # Category "Playback"
 msgctxt "#32041"
@@ -60,35 +92,21 @@ msgid "Playback"
 msgstr "Afspelen"
 
 msgctxt "#32042"
-msgid "Command when playback starts"
-msgstr "Commando wanneer afspelen wordt gestart"
+msgid "Started"
+msgstr "Gestart"
 
 msgctxt "#32043"
-msgid "Command when playback is paused"
-msgstr "Commando wanneer afspelen wordt gepauzeerd"
+msgid "Paused"
+msgstr "Gepauzeerd"
 
 msgctxt "#32044"
-msgid "Command when playback is resumed"
-msgstr "Commando wanneer afspelen wordt hervat"
+msgid "Resume"
+msgstr "Hervat"
 
 msgctxt "#32045"
-msgid "Command when playback has ended"
-msgstr "Commando wanneer afspelen is beëindigd"
+msgid "Ended"
+msgstr "Beëindigd"
 
 msgctxt "#32046"
-msgid "Command when playback is stopped"
-msgstr "Command wanneer afspelen wordt gestopt"
-
-# List of possible AVR Make and Models
-msgctxt "#32080"
-msgid "Pioneer VSX-923"
-msgstr ""
-
-msgctxt "#32081"
-msgid "Denon AVR-X2000"
-msgstr ""
-
-msgctxt "#32082"
-msgid "Denon AVR-E400"
-msgstr ""
-
+msgid "Stopped"
+msgstr "Gestopt"

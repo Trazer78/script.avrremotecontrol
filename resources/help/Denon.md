@@ -3,52 +3,58 @@
 ## Command list
 
 ### Power
-| Script command  	    | telnet command   	|                                   |
-| ---------------------	| -----------------	| --------------------------------- |
-| POWER_ON   	        | PWON   	        |                                   |
-| POWER_OFF  	        | PWSTANDBY        	|                                   |
-| POWER_TOGGLE          |                   | Custom implementation             |
-| POWER_QUERY           | PW?               |                                   |
+| Command  	            | Parameter         | telnet command   	|                                   |
+| ---------------------	| -----------------	| ----------------- | --------------------------------- |
+| POWER                 | ON                | PWON   	        |                                   |
+|                       | OFF               | PWSTANDBY        	|                                   |
+|                       | TOGGLE            |                   | Custom implementation             |
+|                       | QUERY             | PW?               |                                   |
 
 ### Volume
-| Script command  	    | telnet command   	|                                   |
-| ---------------------	| -----------------	| --------------------------------- |
-| VOLUME_UP   	        | MVUP 	            |                                   |
-| VOLUME_DOWN  	        | MVDOWN            |                                   |
-| VOLUME_SET  	        | MV**           	| Range between 00 - 98 by ASCII    |
-| VOLUME_QUERY          | MV?               |                                   |
+| Command  	            | Parameter         | telnet command   	|                                   |
+| ---------------------	| -----------------	| ----------------- | --------------------------------- |
+| VOLUME   	            | UP                | MVUP 	            |                                   |
+|                       | DOWN              | MVDOWN            |                                   |
+|                       | SET**             | MV**           	| Range between 00 - 98 by ASCII    |
+|                       | QUERY             | MV?               |                                   |
 
 ### Mute
-| Script command  	    | telnet command   	|                                   |
-| ---------------------	| -----------------	| --------------------------------- |
-| MUTE_ON   	        | MUON              |                                   |
-| MUTE_OFF  	        | MUOFF           	|                                   |
-| MUTE_TOGGLE           |                   | Custom implementation             |
-| MUTE_QUERY            | MU?               |                                   |
+| Command  	            | Parameter         | telnet command   	|                                   |
+| ---------------------	| -----------------	| ----------------- | --------------------------------- |
+| MUTE                  | ON                | MUON              |                                   |
+|                       | OFF               | MUOFF           	|                                   |
+|                       | TOGGLE            |                   | Custom implementation             |
+|                       | QUERY             | MU?               |                                   |
 
 ### Input
-| Script command  	    | telnet command   	|                                   |
-| ---------------------	| -----------------	| --------------------------------- |
-| INPUT_CD   	        | SICD 	            |                                   |
-| INPUT_TUNER  	        | SITUNER           |                                   |
-| INPUT_DVD   	        | SIDVD	            |                                   |
-| INPUT_BD   	        | SIBD 	            |                                   |
-| INPUT_TV   	        | SITV 	            |                                   |
-| INPUT_SATCBL 	        | SISAT/CBL         |                                   |
-| INPUT_MEDIAPLAYER     | SIMPLAY  	        |                                   |
-| INPUT_GAME   	        | SIGAME   	        |                                   |
-| INPUT_AUX   	        | SIAUX1   	        |                                   |
-| INPUT_NETWORK	        | SINET	            |                                   |
-| INPUT_PANDORA	        | SIPANDORA         |                                   |
-| INPUT_SIRIUSXM        | SISIRIUSXM        |                                   |
-| INPUT_SPOTIFY	        | SISPOTIFY         |                                   |
-| INPUT_FAVORITES       | SIFAVORITES       |                                   |
-| INPUT_INTERNETRADIO   | SIIRADIO          |                                   |
-| INPUT_SERVER 	        | SISERVER 	        |                                   |
-| INPUT_IPODUSB	        | SIIPOD/USB        |                                   |
-| INPUT_QUERY 	        | SI? 	            |                                   |
+| Command  	            | Parameter         | telnet command   	|                                   |
+| ---------------------	| -----------------	| ----------------- | --------------------------------- |
+| INPUT                 | CD      	        | SICD 	            |                                   |
+|                       | TUNER  	        | SITUNER           |                                   |
+|                       | DVD   	        | SIDVD	            |                                   |
+|                       | BD       	        | SIBD 	            |                                   |
+|                       | TV       	        | SITV 	            |                                   |
+|                       | SATCBL 	        | SISAT/CBL         |                                   |
+|                       | MEDIAPLAYER       | SIMPLAY  	        |                                   |
+|                       | GAME   	        | SIGAME   	        |                                   |
+|                       | AUX   	        | SIAUX1   	        |                                   |
+|                       | NETWORK	        | SINET	            |                                   |
+|                       | PANDORA	        | SIPANDORA         |                                   |
+|                       | SIRIUSXM          | SISIRIUSXM        |                                   |
+|                       | SPOTIFY	        | SISPOTIFY         |                                   |
+|                       | FAVORITES         | SIFAVORITES       |                                   |
+|                       | IRADIO            | SIIRADIO          |                                   |
+|                       | SERVER 	        | SISERVER 	        |                                   |
+|                       | IPODUSB	        | SIIPOD/USB        |                                   |
+|                       | QUERY 	        | SI? 	            |                                   |
 
 ### Video Resolution
-| Script command  	    | telnet command   	|                                   |
-| ---------------------	| -----------------	| --------------------------------- |
-|  VIDEO_RES_HDMI_AUTO  | VSSCHAUTO         |                                   |
+| Command  	            | Parameter         | telnet command   	|                                   |
+| ---------------------	| -----------------	| ----------------- | --------------------------------- |
+|  VIDEO_SCALING_HDMI   | 480p              | VSSCH48P          |                                   |
+|                       | 1080i             | VSSCH10I          |                                   |
+|                       | 720p              | VSSCH72P          |                                   |
+|                       | 1080p             | VSSCH10P          |                                   |
+|                       | 10p24             | VSSCH10P24        |                                   |
+|                       | 4K                | VSSCH4K           |                                   |
+|                       | AUTO              | VSSCHAUTO         |                                   |

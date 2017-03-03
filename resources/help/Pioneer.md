@@ -6,61 +6,60 @@ Compatible with following AVR's
 ## Command list
 
 ### Power
-| Script command  	    | telnet command   	|                                   |
-| ---------------------	| -----------------	| --------------------------------- |
-| POWER_ON   	        | PO   	            |
-| POWER_OFF  	        | PF               	|
-| POWER_TOGGLE  	    | PZ              	|
-| POWER_QUERY           | ?P                |
+| Command  	            | Parameter         | telnet command   	|                                   |
+| ---------------------	| -----------------	| ----------------- | --------------------------------- |
+| POWER                 | ON   	            | PO   	            |
+|                       | OFF  	            | PF               	|
+|                       | TOGGLE  	        | PZ              	|
+|                       | QUERY             | ?P                |
 
 ### Volume
-| Script command  	    | telnet command   	|                                   |
-| ---------------------	| -----------------	| --------------------------------- |
-| VOLUME_UP   	        | VU   	            |                                   |
-| VOLUME_DOWN  	        | VD               	|                                   |
-| VOLUME_SET  	        | ***VL           	| Range between 000 - 185 by ASCII  |
-| VOLUME_QUERY          | ?V                |                                   |
+| Command  	            | Parameter         | telnet command   	|                                   |
+| ---------------------	| -----------------	| ----------------- | --------------------------------- |
+| VOLUME                | UP   	            | VU   	            |                                   |
+|                       | DOWN  	        | VD               	|                                   |
+|                       | SET***  	        | ***VL           	| Range between 000 - 185 by ASCII  |
+|                       | QUERY             | ?V                |                                   |
 
 ### Mute
-| Script command  	    | telnet command   	|                                   |
-| ---------------------	| -----------------	| --------------------------------- |
-| MUTE_ON   	        | MO   	            |
-| MUTE_OFF  	        | MF               	|
-| MUTE_TOGGLE  	        | MZ              	|
-| MUTE_QUERY            | ?M                |
+| Command  	            | Parameter         | telnet command   	|                                   |
+| ---------------------	| -----------------	| ----------------- | --------------------------------- |
+| MUTE                  | ON   	            | MO   	            |
+|                       | OFF  	            | MF               	|
+|                       | TOGGLE  	        | MZ              	|
+|                       | QUERY             | ?M                |
 
 ### Input
-| Script command  	    | telnet command   	|                                   |
-| ---------------------	| -----------------	| --------------------------------- |
-| INPUT_CD   	        | 01FN 	            |                                   |
-| INPUT_TUNER  	        | 02FN 	            |                                   |
-| INPUT_DVD   	        | 04FN 	            |                                   |
-| INPUT_BD   	        | 25FN 	            |                                   |
-| INPUT_TV   	        | 05FN 	            |                                   |
-| INPUT_SATCBL 	        | 06FN 	            |                                   |
-| INPUT_AUX   	        | 10FN   	        | VIDEO 1 (VIDEO)                   |
-| INPUT_NETWORK	        | 26FN 	            |                                   |
-| INPUT_PANDORA	        | 41FN 	            |                                   |
-| INPUT_SIRIUSXM        | 40FN 	            |                                   |
-| INPUT_SPOTIFY	        | ? 	            |                                   |
-| INPUT_FAVORITES       | 45FN 	            |                                   |
-| INPUT_INTERNETRADIO   | 38FN 	            |                                   |
-| INPUT_SERVER 	        | 44FN 	            |                                   |
-| INPUT_IPODUSB	        | 17FN 	            |                                   |
-| INPUT_PHONO 	        | 00FN 	            |                                   |
-| INPUT_USBDAC 	        | 13FN 	            |                                   |
-| INPUT_HDMI1 	        | 19FN 	            |                                   |
-| INPUT_HDMI2 	        | 20FN 	            |                                   |
-| INPUT_HDMI3 	        | 21FN 	            |                                   |
-| INPUT_HDMI4 	        | 22FN 	            |                                   |
-| INPUT_HDMI5 	        | 23FN 	            |                                   |
-| INPUT_HDMI6 	        | 24FN 	            |                                   |
-| INPUT_HDMI7 	        | 34FN 	            |                                   |
-| INPUT_HDMI_TOGGLE     | 31FN 	            |                                   |
-| INPUT_MHL 	        | 48FN 	            |                                   |
-| INPUT_DVRBDR 	        | 15FN 	            |                                   |
-| INPUT_ADAPTER	        | 33FN 	            |                                   |
-| INPUT_MULTICHANNEL    | 12FN 	            |                                   |
-| INPUT_TOGGLE_UP       | FU 	            |                                   |
-| INPUT_TOGGLE_DOWN     | FD 	            |                                   |
-| INPUT_QUERY 	        | ?F 	            |                                   |
+| Command  	            | Parameter         | telnet command   	|                                   |
+| ---------------------	| -----------------	| ----------------- | --------------------------------- |
+| INPUT                 | CD   	            | 01FN 	            |                                   |
+|                       | TUNER  	        | 02FN 	            |                                   |
+|                       | DVD   	        | 04FN 	            |                                   |
+|                       | BD   	            | 25FN 	            |                                   |
+|                       | TV   	            | 05FN 	            |                                   |
+|                       | SATCBL 	        | 06FN 	            |                                   |
+|                       | AUX   	        | 10FN   	        | VIDEO 1 (VIDEO)                   |
+|                       | NETWORK	        | 26FN 	            |                                   |
+|                       | PANDORA	        | 41FN 	            |                                   |
+|                       | SIRIUSXM          | 40FN 	            |                                   |
+|                       | FAVORITES         | 45FN 	            |                                   |
+|                       | IRADIO            | 38FN 	            |                                   |
+|                       | SERVER 	        | 44FN 	            |                                   |
+|                       | IPODUSB	        | 17FN 	            |                                   |
+|                       | PHONO 	        | 00FN 	            |                                   |
+|                       | USBDAC 	        | 13FN 	            |                                   |
+|                       | HDMI1 	        | 19FN 	            |                                   |
+|                       | HDMI2 	        | 20FN 	            |                                   |
+|                       | HDMI3 	        | 21FN 	            |                                   |
+|                       | HDMI4 	        | 22FN 	            |                                   |
+|                       | HDMI5 	        | 23FN 	            |                                   |
+|                       | HDMI6 	        | 24FN 	            |                                   |
+|                       | HDMI7 	        | 34FN 	            |                                   |
+|                       | HDMITOGGLE        | 31FN 	            |                                   |
+|                       | MHL 	            | 48FN 	            |                                   |
+|                       | DVRBDR 	        | 15FN 	            |                                   |
+|                       | ADAPTER	        | 33FN 	            |                                   |
+|                       | MULTICHANNEL      | 12FN 	            |                                   |
+|                       | TOGGLEUP          | FU 	            |                                   |
+|                       | TOGGLEDOWN        | FD 	            |                                   |
+|                       | QUERY 	        | ?F 	            |                                   |

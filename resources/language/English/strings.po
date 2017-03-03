@@ -16,29 +16,41 @@ msgstr ""
 "Language: en\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-# Category: "Device"
+# Category "Device"
 msgctxt "#32001"
 msgid "Device"
 msgstr ""
 
 msgctxt "#32002"
-msgid "IP address"
+msgid "Select AVR make and model"
 msgstr ""
 
 msgctxt "#32003"
-msgid "Port number"
+msgid "Make"
 msgstr ""
 
 msgctxt "#32004"
-msgid "Timeout (in seconds)"
+msgid "Model"
 msgstr ""
 
 msgctxt "#32005"
-msgid "Delay (in milliseconds)"
+msgid "Network settings"
 msgstr ""
 
 msgctxt "#32006"
-msgid "Device"
+msgid "IP address"
+msgstr ""
+
+msgctxt "#32007"
+msgid "Port number"
+msgstr ""
+
+msgctxt "#32008"
+msgid "Timeout (in seconds)"
+msgstr ""
+
+msgctxt "#32009"
+msgid "Delay (in milliseconds)"
 msgstr ""
 
 # Category "Service"
@@ -47,11 +59,31 @@ msgid "Service"
 msgstr ""
 
 msgctxt "#32022"
-msgid "Command when service starts"
+msgid "Change AVR input on Kodi start/stop"
 msgstr ""
 
 msgctxt "#32023"
-msgid "Command when service stops"
+msgid "Input when the service starts"
+msgstr ""
+
+msgctxt "#32024"
+msgid "Restore original input on service stop"
+msgstr ""
+
+msgctxt "#32025"
+msgid "Input when the service stops"
+msgstr ""
+
+msgctxt "#32026"
+msgid "Additional command(s) to run on service start/stop"
+msgstr ""
+
+msgctxt "#32027"
+msgid "Service start"
+msgstr ""
+
+msgctxt "#32028"
+msgid "Service stop"
 msgstr ""
 
 # Category "Playback"
@@ -60,34 +92,21 @@ msgid "Playback"
 msgstr ""
 
 msgctxt "#32042"
-msgid "Command when playback starts"
+msgid "Started"
 msgstr ""
 
 msgctxt "#32043"
-msgid "Command when playback is paused"
+msgid "Paused"
 msgstr ""
 
 msgctxt "#32044"
-msgid "Command when playback is resumed"
+msgid "Resume"
 msgstr ""
 
 msgctxt "#32045"
-msgid "Command when playback has ended"
+msgid "Ended"
 msgstr ""
 
 msgctxt "#32046"
-msgid "Command when playback is stopped"
-msgstr ""
-
-# List of possible AVR Make and Models
-msgctxt "#32080"
-msgid "Pioneer VSX-923"
-msgstr ""
-
-msgctxt "#32081"
-msgid "Denon AVR-X2000"
-msgstr ""
-
-msgctxt "#32082"
-msgid "Denon AVR-E400"
+msgid "Stopped"
 msgstr ""

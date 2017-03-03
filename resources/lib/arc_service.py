@@ -23,10 +23,8 @@ class ArcService(object):
         # Get info
         self.addonversion = addon.getAddonInfo('version')
         self.addonname = addon.getAddonInfo('name')
-        # Get settings
-        self.device = addon.getSetting('arc_device')
 
-        log_msg("%s version %s started" \
+        log_msg('%s version %s started' \
             % (self.logprefix, self.addonversion), xbmc.LOGNOTICE)
 
         self.arcmonitor = ArcMonitor()
@@ -36,7 +34,7 @@ class ArcService(object):
             # Sleep/wait for abort for 1 second.
             self.arcmonitor.waitForAbort(10)
 
-        log_msg("%s version %s shutdown requested" \
+        log_msg('%s version %s shutdown requested' \
             % (self.logprefix, self.addonversion), xbmc.LOGNOTICE)
 
         # Cleanup
@@ -46,5 +44,5 @@ class ArcService(object):
         ''' Cleanup '''
         del self.arcmonitor
         del self.arcplayer
-        log_msg("%s version %s finished" \
+        log_msg('%s version %s finished' \
             % (self.logprefix, self.addonversion), xbmc.LOGNOTICE)

@@ -7,9 +7,9 @@
 
     vsx_923.py --> Pioneer VSX-923 implementation
 '''
-import ast
 import os
-from resources.lib.utils import log_msg, telnet_execute, get_addon_path
+from resources.lib.utils import log_msg, telnet_execute, load_json
+import xbmc
 
 class PioneerVSX923(object):
     ''' Pioneer VSX-923 implementation '''
@@ -20,106 +20,117 @@ class PioneerVSX923(object):
 
     def __init__(self):
         self.logprefix = '('+self.__class__.__name__+')'
-        log_msg(self.logprefix+'.__init__')
+        log_msg('%s.__init__' % self.logprefix)
 
         # Available telnet commands list
-        self.commandlist = self.get_commandlist()
+        self.deviceinfo = self.get_deviceinfo()
 
-    def parse_command(self, command, parameter=None):
+        log_msg('%s.__init__ loaded device info for %s %s' % \
+            (self.logprefix, self.deviceinfo["make"], self.deviceinfo["model"]))
+
+    def run_command(self, command, parameter, response=False):
         ''' Find function based on the command passed '''
-        if parameter is None:
-            log_msg(self.logprefix+'.parse_command, command: '+command)
-        else:
-            log_msg(self.logprefix+'.parse_command, command: '+command+' param: '+parameter)
+        log_msg('%s.run_command, group: %s parameter %s' % (self.logprefix, command, parameter))
 
         # Check if the specified command has a custom implementation.
-        if hasattr(self, command.lower()):
-            if command == 'VOLUME_SET':
-                return self.volume_set(parameter)
+        checkdef = "%s_%s" % (command, parameter)
+        if hasattr(self, checkdef.lower()):
+            if command.lower() == "volume":
+                if parameter[:3].lower() == "set":
+                    volumelevel = parameter[3:]
+                    return self.volume_set(volumelevel)
             else:
-                return getattr(self, command.lower())()
+                return getattr(self, checkdef.lower())()
         else:
-            avrcommand = self.find_command(command)
+            avrcommand = self.find_avrcommand(command, parameter)
             if avrcommand != None:
-                return self.execute_command(avrcommand)
+                return self.execute_avrcommand(avrcommand, response)
 
             else:
                 return "Unrecognized command"
 
-    def find_command(self, command):
-        ''' Find the telnet command based on the generic command '''
-        log_msg(self.logprefix+'.find_command, command: '+command)
+    def find_avrcommand(self, command, parameter):
+        ''' Find the telnet command based on the command and parameter '''
+        log_msg('%s.find_avrcommand, command: %s, parameter: %s ' \
+            % (self.logprefix, command, parameter))
 
-        return self.commandlist.get(command, None)
+        try:
+            avrcommand = (self.deviceinfo["commands"][command.upper()][parameter]) \
+                .strip().encode("ascii", "ignore")
+        except KeyError:
+            return None
 
-    def execute_command(self, avrcommand, withresponse=False):
+        return avrcommand
+
+    def execute_avrcommand(self, avrcommand, response=False):
         ''' Execute command against telnet '''
-        log_msg(self.logprefix+'.execute_command, command: '+avrcommand)
+        log_msg('%s.execute_avrcommand %s' % (self.logprefix, avrcommand))
 
-        return telnet_execute(avrcommand, withresponse)
+        return telnet_execute(avrcommand, response)
 
     # VOLUME
     def volume_up(self):
         ''' Custom: VOLUME_UP '''
-        log_msg(self.logprefix+'.volume_up')
+        log_msg('%s.volume_up' % self.logprefix)
 
-        avrcommand = self.find_command("VOLUME_QUERY")
-        if int(self.execute_command(avrcommand, True)[3:]) < self.VOLUME_MAX:
-            return self.execute_command(self.find_command("VOLUME_UP"))
-
+        if self.get_volumelevel() < self.VOLUME_MAX:
+            return self.execute_avrcommand(self.find_avrcommand("VOLUME", "UP"))
 
     def volume_down(self):
-        ''' Custom: VOLUME_DOWN '''
-        log_msg(self.logprefix+'.volume_down')
+        ''' Custom: VOLUME|DOWN '''
+        log_msg('%s.volume_down' % self.logprefix)
 
-        avrcommand = self.find_command("VOLUME_QUERY")
-        if int(self.execute_command(avrcommand, True)[3:]) > self.VOLUME_MIN:
-            return self.execute_command(self.find_command("VOLUME_DOWN"))
-
+        if  self.get_volumelevel() > self.VOLUME_MIN:
+            return self.execute_avrcommand(self.find_avrcommand("VOLUME", "DOWN"))
 
     def volume_set(self, volumelevel):
-        ''' Custom: VOLUME_SET '''
-        log_msg(self.logprefix+'.volume_set, volumelevel: '+volumelevel)
+        ''' Custom: VOLUME|SET*** '''
+        log_msg('%s.volume_set, volumelevel: %s' % (self.logprefix, volumelevel))
 
         if int(volumelevel) >= self.VOLUME_MIN and int(volumelevel) <= self.VOLUME_MAX:
-            return self.execute_command('VL'+volumelevel)
+            return self.execute_avrcommand('VL'+volumelevel)
         else:
             pass
 
-    def get_commandlist(self):
+    def get_volumelevel(self):
+        ''' Get current volume level from the AVR '''
+        log_msg('%s.get_volumelevel' % self.logprefix)
+
+        avrcommand = self.find_avrcommand("VOLUME", "QUERY")
+        level = (self.execute_avrcommand(avrcommand, True)[:3]).strip()
+
+        log_msg('%s.get_volumelevel. Current volume level: %s' % (self.logprefix, level), xbmc.LOGNOTICE)
+
+        return int(level)
+
+    def input_query(self):
+        ''' Custom: INPUT|QUERY '''
+        log_msg('%s.volume_down' % self.logprefix)
+
+        avrcommand = self.find_avrcommand("INPUT", "QUERY")
+        currentinput = self.execute_avrcommand(avrcommand, True)
+        if currentinput != '':
+            cmd = '%s%s' % (currentinput[2:].strip(), currentinput[:2].strip())
+            inputcmd = self.get_input(self.deviceinfo, cmd)
+            log_msg('%s.input_query, currentinput: %s' % (self.logprefix, inputcmd))
+            return inputcmd
+        else:
+            return ''
+
+    def get_deviceinfo(self):
         ''' Return a list of simple commands'''
-        log_msg(self.logprefix+'.get_commandlist')
+        log_msg('%s.get_commandlist' % self.logprefix)
 
-        # # Load commands list
-        # commandfile = os.path.join(get_addon_path(), 'resources/lib/devices/pioneer/2013.codes')
-        # log_message(self.logprefix+'.get_commandlist, commandfile: '+commandfile)
+        infofile = os.path.join('resources', 'lib', 'devices', 'pioneer', 'vsx_923.json')
 
-        # with open(commandfile, 'r') as codefile:
-        #     self.commandlist = ast.literal_eval(codefile.read())
+        return load_json(infofile)
 
-        return {
-            "POWER_ON": "PO", "POWER_OFF": "PF", "POWER_TOGGLE": "PZ", "POWER_QUERY": "?P",
-            "VOLUME_UP": "VU", "VOLUME_DOWN": "VD", "VOLUME_SET": "VL***", "VOLUME_QUERY": "?V",
-            "MUTE_ON": "MO", "MUTE_OFF": "MF", "MUTE_TOGGLE": "MZ", "MUTE_QUERY": "?M",
-            "INPUT_CD": "01FN",
-            "INPUT_TUNER" : "02FN",
-            "INPUT_DVD": "04FN", "INPUT_BD": "25FN",
-            "INPUT_TV": "05FN",
-            "INPUT_SATCBL": "06FN",
-            "INPUT_AUX": "10FN",
-            "INPUT_NETWORK": "26FN",
-            "INPUT_PANDORA": "41FN", "INPUT_SIRIUSXM": "40FN",
-            "INPUT_FAVORITES": "45FN",
-            "INPUT_INTERNETRADIO": "38FN",
-            "INPUT_SERVER": "44FN",
-            "INPUT_IPODUSB": "17FN",
-            "INPUT_PHONO": "00FN",
-            "INPUT_USBDAC": "13FN",
-            "INPUT_HDMI1": "19FN", "INPUT_HDMI2": "20FN", "INPUT_HDMI3": "21FN",
-            "INPUT_HDMI4": "22FN", "INPUT_HDMI5": "23FN", "INPUT_HDMI6": "24FN",
-            "INPUT_HDMI7": "34FN", "INPUT_HDMI_TOGGLE": "31FN", "INPUT_HDMI_MHL": "48FN",
-            "INPUT_DVRBDR": "15FN",
-            "INPUT_ADAPTER": "33FN", "INPUT_MULTICHANNEL": "12FN",
-            "INPUT_TOGGLE_UP": "FU", "INPUT_TOGGLE_DOWN": "FD",
-            "INPUT_QUERY": "?F"
-        }
+    def get_input(self, jsonobject, inputvalue):
+        ''' Returns a list of inputs available '''
+
+        inputs = jsonobject["commands"]["INPUT"]
+        for cmd, param in inputs.iteritems():
+            if param == inputvalue:
+                return cmd
+
+        return ''

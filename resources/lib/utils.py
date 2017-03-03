@@ -7,6 +7,8 @@
 
     utils.py --> Helper functions
 '''
+import os
+import json
 import sys
 import telnetlib
 import time
@@ -29,19 +31,18 @@ def log_exception(modulename, exceptiondetails):
     '''helper to properly log an exception'''
 
     log_msg(format_exc(sys.exc_info()), xbmc.LOGWARNING)
-    log_msg("Exception in %s ! --> %s" % (modulename, exceptiondetails), xbmc.LOGERROR)
+    log_msg('Exception in %s ! --> %s' % (modulename, exceptiondetails), xbmc.LOGERROR)
 
-def telnet_execute(command, withresponse=False):
+def telnet_execute(avrcommand, withresponse=False):
     ''' Send a command to the AVR Device via telnet '''
-    log_msg(ADDON_NAME+" --> (telnet_execute)")
 
     addon = xbmcaddon.Addon(ADDON_ID)
-    ipaddress = addon.getSetting('arc_ip')
-    port = int(addon.getSetting('arc_port'))
-    timeout = int(addon.getSetting('arc_timeout'))
-    delay = float(int(addon.getSetting('arc_delay'))/1000)
+    ipaddress = addon.getSetting('ip')
+    port = int(addon.getSetting('port'))
+    timeout = int(addon.getSetting('timeout'))
+    delay = float(int(addon.getSetting('delay'))/1000)
 
-    log_msg("(telnet_execute) ip: %s, port: %s, timeout: %s, delay: %s" \
+    log_msg('(telnet_execute) ip: %s, port: %s, timeout: %s, delay: %s' \
         % (ipaddress, port, timeout, delay))
 
     try:
@@ -50,9 +51,15 @@ def telnet_execute(command, withresponse=False):
         log_exception(__name__, exc)
         return "Error occured while connecting to AVR telnet server"
 
-    log_msg('(telnet_execute) Request: '+command, loglevel=xbmc.LOGNOTICE)
+    log_msg('(telnet_execute) command: %s' % avrcommand, xbmc.LOGNOTICE)
 
-    _tn.write(command+"\r")
+    try:
+        _tn.write(avrcommand+"\r")
+    except Exception as exc:
+        log_exception(__name__, exc)
+        _tn.close()
+        return "Error occured while writing to AVR telnet server"
+
     if withresponse:
         time.sleep(delay)
         response = _tn.read_eager()
@@ -60,11 +67,33 @@ def telnet_execute(command, withresponse=False):
         response = "not waiting for a response"
     _tn.close()
 
-    log_msg("(telnet_execute) Response: "+response, loglevel=xbmc.LOGNOTICE)
+    log_msg('(telnet_execute) Response: %s' % \
+        (response), loglevel=xbmc.LOGNOTICE)
 
     return response
+
+def decode_folder(folder):
+    """
+    :param folder:
+    :return:
+    """
+    return folder.decode(sys.getfilesystemencoding())
 
 def get_addon_path():
     ''' Get installed addon path '''
 
     return xbmcaddon.Addon(ADDON_ID).getAddonInfo('path').decode("utf-8")
+
+def load_json(filename):
+    ''' Load json from file to object '''
+
+    jsonfile = decode_folder(os.path.join(get_addon_path(), filename))
+
+    log_msg('%s --> (load_json) Loading from file: %s' % (ADDON_NAME, jsonfile))
+
+    with open(jsonfile, 'r') as devicefile:
+        jsoninfo = json.loads(devicefile.read())
+
+    log_msg('%s --> (load_json) Loaded from file: %s' % (ADDON_NAME, jsoninfo))
+
+    return jsoninfo

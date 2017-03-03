@@ -9,93 +9,104 @@
 '''
 import ast
 import os
-from resources.lib.utils import log_msg, telnet_execute, get_addon_path
+import json
+from resources.lib.utils import log_msg, telnet_execute, load_json
 
 class DenonAVRE400(object):
     ''' Denon AVR-E400 implementation '''
 
     def __init__(self):
         self.logprefix = '('+self.__class__.__name__+')'
-        log_msg(self.logprefix+'.__init__')
+        log_msg('%s.__init__' % self.logprefix)
 
         # Available telnet commands list
-        self.commandlist = self.get_commandlist()
+        self.deviceinfo = self.get_deviceinfo()
 
-    def parse_command(self, command, parameter=None):
+        log_msg('%s.__init__ loaded device info for %s %s' % \
+            (self.logprefix, self.deviceinfo["make"], self.deviceinfo["model"]))
+
+    def run_command(self, command, parameter, response=False):
         ''' Find function based on the command passed '''
-        if parameter is None:
-            log_msg(self.logprefix+'.parse_command, command: '+command)
-        else:
-            log_msg(self.logprefix+'.parse_command, command: '+command+' param: '+parameter)
+        log_msg('%s.run_command, group: %s parameter %s' % (self.logprefix, command, parameter))
 
         # Check if the specified command has a custom implementation.
-        if hasattr(self, command.lower()):
-            if command == 'VOLUME_SET':
-                return self.volume_set(parameter)
+        checkdef = "%s_%s" % (command, parameter)
+        if hasattr(self, checkdef.lower()):
+            if command.lower() == "volume":
+                if parameter[:3].lower() == "set":
+                    volumelevel = parameter[3:]
+                    return self.volume_set(volumelevel)
             else:
-                return getattr(self, command.lower())()
+                return getattr(self, checkdef.lower())()
         else:
-            avrcommand = self.find_command(command)
+            avrcommand = self.find_avrcommand(command, parameter)
             if avrcommand != None:
-                return self.execute_command(avrcommand)
+                return self.execute_avrcommand(avrcommand, response)
 
             else:
                 return "Unrecognized command"
 
-    def find_command(self, command):
-        ''' Find the telnet command based on the generic command '''
-        log_msg(self.logprefix+'.find_command, command: '+command)
+    def find_avrcommand(self, command, parameter):
+        ''' Find the telnet command based on the command and parameter '''
+        log_msg('%s.find_avrcommand, command: %s, parameter: %s ' \
+            % (self.logprefix, command, parameter))
 
-        return self.commandlist.get(command, None)
+        try:
+            avrcommand = (self.deviceinfo["commands"][command.upper()][parameter]) \
+                .strip().encode("ascii", "ignore")
+        except KeyError:
+            return None
 
-    def execute_command(self, avrcommand, withresponse=False):
+        return avrcommand
+
+    def execute_avrcommand(self, avrcommand, response=False):
         ''' Execute command against telnet '''
-        log_msg(self.logprefix+'.execute_command, command: '+avrcommand)
+        log_msg('%s.execute_avrcommand %s' % (self.logprefix, avrcommand))
 
-        return telnet_execute(avrcommand, withresponse)
+        return telnet_execute(avrcommand, response)
 
     # POWER
     def power_toggle(self):
         ''' Custom POWER_TOGGLE '''
-        log_msg(self.logprefix+'.power_toggle')
+        log_msg('%s.power_toggle' % self.logprefix)
 
-        poweron = self.find_command("POWER_ON")
-        poweroff = self.find_command("POWER_OFF")
-        powerquery = self.find_command("POWER_QUERY")
+        poweron = self.find_avrcommand("POWER", "ON")
+        poweroff = self.find_avrcommand("POWER", "OFF")
+        powerquery = self.find_avrcommand("POWER", "QUERY")
 
-        status = self.execute_command(powerquery, True)
+        status = self.execute_avrcommand(powerquery, True)
         if status == poweron:
-            return self.execute_command(poweroff)
+            return self.execute_avrcommand(poweroff)
         elif status == poweroff:
-            return self.execute_command(poweron)
+            return self.execute_avrcommand(poweron)
 
     # VOLUME
     def volume_up(self):
-        ''' Custom VOLUME_UP '''
-        log_msg(self.logprefix+'.volume_up')
+        ''' Custom VOLUME|UP '''
+        log_msg('%s.volume_up' % self.logprefix)
 
-        volumequery = self.find_command("VOLUME_QUERY")
-        volumelevel = self.get_volumelevel(self.execute_command(volumequery, True))
+        volumequery = self.find_avrcommand("VOLUME", "QUERY")
+        volumelevel = self.get_volumelevel(self.execute_avrcommand(volumequery, True))
         if float(volumelevel/10) <= 80:
-            return self.execute_command(self.find_command("VOLUME_UP"))
+            return self.execute_avrcommand(self.find_avrcommand("VOLUME", "UP"))
 
     def volume_down(self):
-        ''' Custom VOLUME_DOWN '''
-        log_msg(self.logprefix+'.volume_down')
+        ''' Custom VOLUME|DOWN '''
+        log_msg('%s.volume_down' % self.logprefix)
 
-        volumequery = self.find_command("VOLUME_QUERY")
-        volumelevel = self.get_volumelevel(self.execute_command(volumequery, True))
+        volumequery = self.find_avrcommand("VOLUME", "QUERY")
+        volumelevel = self.get_volumelevel(self.execute_avrcommand(volumequery, True))
         if int(volumelevel) > 0:
-            return self.execute_command(self.find_command("VOLUME_DOWN"))
+            return self.execute_avrcommand(self.find_avrcommand("VOLUME", "DOWN"))
 
     def volume_set(self, volumelevel):
-        ''' Custom VOLUME_SET '''
-        log_msg(self.logprefix+'.volume_set, volumelevel: '+volumelevel)
+        ''' Custom VOLUME|SET** '''
+        log_msg('%s.volume_set, volumelevel: %s' % (self.logprefix, volumelevel))
 
-        volumequery = self.find_command("VOLUME_QUERY")
+        volumequery = self.find_avrcommand("VOLUME", "QUERY")
         if self.validate_volume(volumelevel) and \
-            self.execute_command(volumequery, True) != volumelevel:
-            return self.execute_command('MV'+volumelevel)
+            self.execute_avrcommand(volumequery, True) != volumelevel:
+            return self.execute_avrcommand('MV'+volumelevel)
 
     def get_volumelevel(self, value):
         ''' Get current volumelevel from AVR response '''
@@ -106,7 +117,7 @@ class DenonAVRE400(object):
 
     def validate_volume(self, volumelevel):
         ''' Validate volumelevel '''
-        log_msg(self.logprefix+'.validate_volume, volumelevel: '+volumelevel)
+        log_msg('%s.validate_volume, volumelevel: %s' % (self.logprefix, volumelevel))
 
         if int(volumelevel[:2]) >= 0 and int(volumelevel[:2] <= 98):
             if volumelevel.len() == 2:
@@ -121,50 +132,20 @@ class DenonAVRE400(object):
     # MUTE
     def mute_toggle(self):
         ''' Custom MUTE_TOGGLE '''
-        log_msg(self.logprefix+'.mute_toggle')
+        log_msg('%s.mute_toggle' % self.logprefix)
 
-        muteon = self.find_command("MUTE_ON")
-        muteoff = self.find_command("MUTE_OFF")
-        mutequery = self.find_command("MUTE_QUERY")
+        muteon = self.find_avrcommand("MUTE", "ON")
+        muteoff = self.find_avrcommand("MUTE", "OFF")
+        mutequery = self.find_avrcommand("MUTE", "QUERY")
 
-        status = self.execute_command(mutequery)
+        status = self.execute_avrcommand(mutequery)
         if status == muteon:
-            return self.execute_command(muteoff)
+            return self.execute_avrcommand(muteoff)
         elif status == muteoff:
-            return self.execute_command(muteon)
+            return self.execute_avrcommand(muteon)
 
-    def get_commandlist(self):
+    def get_deviceinfo(self):
         ''' Return a list of simple commands'''
-        log_msg(self.logprefix+'.get_commandlist')
+        log_msg('%s.get_commandlist' % self.logprefix)
 
-        # Load commands list
-        # commandfile = os.path.join(get_addon_path(), 'resources/lib/devices/denon/avr_e400.codes')
-        # with open(commandfile, 'r') as codefile:
-        #     self.commandlist = ast.literal_eval(codefile.read())
-
-        return {
-            # Power
-            "POWER_ON": "PWON", "POWER_OFF": "PWSTANDBY", "POWER_QUERY": "PW?",
-            # Volume
-            "VOLUME_UP": "MVUP", "VOLUME_DOWN": "MVDOWN",
-            "VOLUME_SET": "VL***", "VOLUME_QUERY": "MV?",
-            # Mute
-            "MUTE_ON": "MUON", "MUTE_OFF": "MUOFF", "MUTE_QUERY": "MU?",
-            # Inputs
-            "INPUT_CD": "SICD", "INPUT_DVD": "SIDVD", "INPUT_BD": "SIBD",
-            "INPUT_TUNER" : "SITUNER", "INPUT_TV": "SITV",
-            "INPUT_SATCBL": "SISAT/CBL",
-            "INPUT_MEDIAPLAYER": "SIMPLAY",
-            "INPUT_AUX": "SIAUX1",
-            "INPUT_NETWORK": "SINET",
-            "INPUT_PANDORA": "SIPANDORA",
-            "INPUT_SIRIUSXM": "SISIRIUSXM",
-            "INPUT_FLICKR": "SIFLICKR",
-            "INPUT_SPOTIFY": "SISPOTIFY",
-            "INPUT_FAVORITES": "SIFAVORITES",
-            "INPUT_INTERNETRADIO": "SIIRADIO",
-            "INPUT_SERVER": "SISERVER",
-            "INPUT_IPODUSB": "SIIPOD/USB",
-            "INPUT_QUERY": "SI?",
-            "VIDEO_RES_HDMI_AUTO": "VSSCHAUTO"
-        }
+        return load_json("resources/lib/devices/denon/avr_e400.json")

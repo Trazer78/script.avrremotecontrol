@@ -1,0 +1,53 @@
+{
+    "make": "Denon",
+    "model": "AVR-E400",
+    "commands": {
+        "POWER": {
+            "ON": "PWON",
+            "OFF": "PWSTANDBY",
+            "TOGGLE": "",
+            "QUERY": "PW?"
+        },
+        "VOLUME": {
+            "UP": "MV_UP",
+            "DOWN": "MV_DOWN",
+            "SET***": "MV***",
+            "QUERY": "MV?"
+        },
+        "MUTE": {
+            "ON": "MUON",
+            "OFF": "MUOFF",
+            "TOGGLE": "",
+            "QUERY": "MU?"
+        },
+        "INPUT": {
+            "CD": "SICD",
+            "TUNER": "SITUNER",
+            "DVD": "SIDVD",
+            "BD": "SIBD",
+            "TV": "SITV",
+            "SATCBL": "SISAT/CBL",
+            "MEDIAPLAYER": "SIMPLAY",
+            "GAME": "SIGAME",
+            "AUX": "SIAUX",
+            "NETWORK": "SINET",
+            "PANDORA": "SIPANDORA",
+            "SIRIUSXM": "SISIRIUSXM",
+            "SPOTIFY": "SISPOTIFY",
+            "FAVORITES": "SIFAVORITES",
+            "INETRADIO": "SIIRADIO",
+            "SERVER": "SISERVER",
+            "IPODUSB": "SIIPOD/USB",
+            "QUERY": "SI?"
+        },
+        "VIDEO_SCALING_HDMI": {
+            "480p": "VSSCH48P",
+            "1080i": "VSSCH10I",
+            "720p": "VSSCH72P",
+            "1080p": "VSSCH10P",
+            "10p24": "VSSCH10P24",
+            "4K": "VSSCH4K",
+            "AUTO": "VSSCHAUTO"
+        }
+    }
+}

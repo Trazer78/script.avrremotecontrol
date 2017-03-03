@@ -1,0 +1,57 @@
+{
+    "make": "Pioneer",
+    "model": "VSX-923",
+    "commands": {
+        "POWER": {
+            "ON": "PO",
+            "OFF": "OF",
+            "TOGGLE": "PZ",
+            "QUERY": "?P"
+        },
+        "VOLUME": {
+            "UP": "VU",
+            "DOWN": "VD",
+            "SET***": "VL***",
+            "QUERY": "?V"
+        },
+        "MUTE": {
+            "ON": "MO",
+            "OFF": "MF",
+            "TOGGLE": "MZ",
+            "QUERY": "?M"
+        },
+        "INPUT": {
+            "CD": "01FN",
+            "TUNER": "02FN",
+            "DVD": "04FN",
+            "BD": "25FN",
+            "TV": "05FN",
+            "SATCBL": "06FN",
+            "VIDEO1": "10FN",
+            "NETWORK": "26FN",
+            "PANDORA": "41FN",
+            "SIRIUSXM": "40FN",
+            "FAVORITES": "45FN",
+            "IRADIO": "36FN",
+            "SERVER": "44FN",
+            "IPODUSB": "17FN",
+            "PHONO": "00FN",
+            "USBDAC": "13FN",
+            "HDMI1": "19FN",
+            "HDMI2": "20FN",
+            "HDMI3": "21FN",
+            "HDMI4": "22FN",
+            "HDMI5": "23FN",
+            "HDMI6": "24FN",
+            "HDMI7": "34FN",
+            "HDMI_TOGGLE": "31FN",
+            "MHL": "48FN",
+            "DVRBDR": "15FN",
+            "ADAPTER": "33FN",
+            "MULTICHANNEL": "12FN",
+            "TOGGLE_UP": "FU",
+            "TOGGLE_DOWN": "FD",
+            "QUERY": "?F"
+        }
+    }
+}
