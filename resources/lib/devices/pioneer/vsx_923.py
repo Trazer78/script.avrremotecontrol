@@ -66,7 +66,7 @@ class PioneerVSX923(object):
         ''' Execute command against telnet '''
         log_msg('%s.execute_avrcommand %s' % (self.logprefix, avrcommand))
 
-        return telnet_execute(avrcommand, response)
+        return telnet_execute(avrcommand, response).strip()
 
     # VOLUME
     def volume_up(self):
@@ -99,13 +99,14 @@ class PioneerVSX923(object):
         avrcommand = self.find_avrcommand("VOLUME", "QUERY")
         level = (self.execute_avrcommand(avrcommand, True)[:3]).strip()
 
-        log_msg('%s.get_volumelevel. Current volume level: %s' % (self.logprefix, level), xbmc.LOGNOTICE)
+        log_msg('%s.get_volumelevel. Current volume level: %s' % \
+            (self.logprefix, level), xbmc.LOGNOTICE)
 
         return int(level)
 
     def input_query(self):
         ''' Custom: INPUT|QUERY '''
-        log_msg('%s.volume_down' % self.logprefix)
+        log_msg('%s.input_query' % self.logprefix)
 
         avrcommand = self.find_avrcommand("INPUT", "QUERY")
         currentinput = self.execute_avrcommand(avrcommand, True)

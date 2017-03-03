@@ -63,7 +63,7 @@ class DenonAVRE400(object):
         ''' Execute command against telnet '''
         log_msg('%s.execute_avrcommand %s' % (self.logprefix, avrcommand))
 
-        return telnet_execute(avrcommand, response)
+        return telnet_execute(avrcommand, response).strip()
 
     # POWER
     def power_toggle(self):
@@ -144,8 +144,26 @@ class DenonAVRE400(object):
         elif status == muteoff:
             return self.execute_avrcommand(muteon)
 
+    #INPUT
+    def input_query(self):
+        ''' Custom: INPUT|QUERY '''
+        log_msg('%s.input_query' % self.logprefix)
+
+        avrcommand = self.find_avrcommand("INPUT", "QUERY")
+        currentinput = self.execute_avrcommand(avrcommand, True)
+        if currentinput != '':
+            inputcmd = currentinput.split(' ').strip()
+            log_msg('%s.input_query, currentinput: %s' % (self.logprefix, inputcmd))
+            return inputcmd
+        else:
+            return ''
+
+    # Generic function(s)
     def get_deviceinfo(self):
         ''' Return a list of simple commands'''
         log_msg('%s.get_commandlist' % self.logprefix)
 
-        return load_json("resources/lib/devices/denon/avr_e400.json")
+        infofile = os.path.join('resources', 'lib', 'devices', 'denon', 'avr_e400.json')
+
+        return load_json(infofile)
+

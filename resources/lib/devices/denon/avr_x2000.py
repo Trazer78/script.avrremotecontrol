@@ -66,7 +66,7 @@ class DenonAVRX2000(object):
         ''' Execute command against telnet '''
         log_msg('%s.execute_avrcommand %s' % (self.logprefix, avrcommand))
 
-        return telnet_execute(avrcommand, response)
+        return telnet_execute(avrcommand, response).strip()
 
     # POWER
     def power_toggle(self):
@@ -114,9 +114,9 @@ class DenonAVRX2000(object):
     def get_volumelevel(self, value):
         ''' Get current volumelevel from AVR response '''
 
-        # Example response: MV315 MVMAX80
+        # Example response: MV315 MVMAX 80
         values = value.split(' ')
-        return values[0][2:]
+        return (values[0])[2:].strip()
 
     def validate_volume(self, volumelevel):
         ''' Validate volumelevel '''
@@ -147,8 +147,25 @@ class DenonAVRX2000(object):
         elif status == muteoff:
             return self.execute_avrcommand(muteon)
 
+    #INPUT
+    def input_query(self):
+        ''' Custom: INPUT|QUERY '''
+        log_msg('%s.input_query' % self.logprefix)
+
+        avrcommand = self.find_avrcommand("INPUT", "QUERY")
+        currentinput = self.execute_avrcommand(avrcommand, True)
+        if currentinput != '':
+            inputcmd = currentinput.split(' ').strip()
+            log_msg('%s.input_query, currentinput: %s' % (self.logprefix, inputcmd))
+            return inputcmd
+        else:
+            return ''
+
+    # Generic function(s)
     def get_deviceinfo(self):
         ''' Return a list of simple commands'''
         log_msg('%s.get_commandlist' % self.logprefix)
 
-        return load_json("resources/lib/devices/denon/avr_x2000.json")
+        infofile = os.path.join('resources', 'lib', 'devices', 'denon', 'avr_x2000.json')
+
+        return load_json(infofile)
