@@ -5,9 +5,9 @@ My first try at a Kodi addon to control an AVR via telnet.
 For your information (a word of caution):
 As i'm just getting started with Python development I currently look to other
 addons for inspiration and information. As my Python experience grows it may lead to
-new insights and as a result lead to "breaking changes"
+new insights.
 
-Breaking changes for v0.0.3
+Breaking change for v0.0.3
 * Commands are separated into command and parameter
   - Example: POWER_ON -> POWER|ON
   Check the readme for the supported devices for all commands
