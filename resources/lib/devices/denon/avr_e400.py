@@ -7,9 +7,7 @@
 
     avr_e400.py --> Denon AVR-E400 implementation
 '''
-import ast
 import os
-import json
 from resources.lib.utils import log_msg, telnet_execute, load_json
 
 class DenonAVRE400(object):
@@ -85,41 +83,43 @@ class DenonAVRE400(object):
         ''' Custom VOLUME|UP '''
         log_msg('%s.volume_up' % self.logprefix)
 
-        volumequery = self.find_avrcommand("VOLUME", "QUERY")
-        volumelevel = self.get_volumelevel(self.execute_avrcommand(volumequery, True))
-        if float(volumelevel/10) <= 80:
+        if float(self.get_volumelevel()/10) <= 80:
             return self.execute_avrcommand(self.find_avrcommand("VOLUME", "UP"))
 
     def volume_down(self):
         ''' Custom VOLUME|DOWN '''
         log_msg('%s.volume_down' % self.logprefix)
 
-        volumequery = self.find_avrcommand("VOLUME", "QUERY")
-        volumelevel = self.get_volumelevel(self.execute_avrcommand(volumequery, True))
-        if int(volumelevel) > 0:
+        if self.get_volumelevel() > 0:
             return self.execute_avrcommand(self.find_avrcommand("VOLUME", "DOWN"))
 
     def volume_set(self, volumelevel):
         ''' Custom VOLUME|SET** '''
         log_msg('%s.volume_set, volumelevel: %s' % (self.logprefix, volumelevel))
 
-        volumequery = self.find_avrcommand("VOLUME", "QUERY")
         if self.validate_volume(volumelevel) and \
-            self.execute_avrcommand(volumequery, True) != volumelevel:
+            self.get_volumelevel() != volumelevel:
             return self.execute_avrcommand('MV'+volumelevel)
 
-    def get_volumelevel(self, value):
-        ''' Get current volumelevel from AVR response '''
+    def get_volumelevel(self):
+        ''' Get current volume level from the AVR '''
+        log_msg('%s.get_volumelevel' % self.logprefix)
 
-        # Example response: MV315 MVMAX80
-        values = value.split(' ')
-        return values[0][2:]
+        avrcommand = self.find_avrcommand("VOLUME", "QUERY")
+        result = self.execute_avrcommand(avrcommand, True)
+        # Example response: MV315 MVMAX 80
+        values = result.split(' ')
+        level = (values[0])[2:].strip()
+        log_msg('%s.get_volumelevel. Current volume level: %s' % \
+            (self.logprefix, level))
+
+        return int(level)
 
     def validate_volume(self, volumelevel):
         ''' Validate volumelevel '''
         log_msg('%s.validate_volume, volumelevel: %s' % (self.logprefix, volumelevel))
 
-        if int(volumelevel[:2]) >= 0 and int(volumelevel[:2] <= 98):
+        if int(volumelevel[:2]) >= 0 and int(volumelevel[:2] <= 80):
             if volumelevel.len() == 2:
                 return True
             elif volumelevel.len() == 3 and volumelevel[2:] == '5':
