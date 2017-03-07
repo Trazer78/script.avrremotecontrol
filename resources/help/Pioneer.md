@@ -38,7 +38,7 @@ Compatible with following AVR's
 |                       | BD   	            | 25FN 	            |                                   |
 |                       | TV   	            | 05FN 	            |                                   |
 |                       | SATCBL 	        | 06FN 	            |                                   |
-|                       | AUX   	        | 10FN   	        | VIDEO 1 (VIDEO)                   |
+|                       | VIDEO1   	        | 10FN   	        |                                   |
 |                       | NETWORK	        | 26FN 	            |                                   |
 |                       | PANDORA	        | 41FN 	            |                                   |
 |                       | SIRIUSXM          | 40FN 	            |                                   |
