@@ -21,49 +21,49 @@ Breaking change for v0.0.3
 
 ### Power
 ```
-RunScript(script.avrremote,command=POWER|ON)
+RunScript(script.avrremotecontrol,command=POWER|ON)
 ```
 ```
-RunScript(script.avrremote,command=POWER|OFF)
+RunScript(script.avrremotecontrol,command=POWER|OFF)
 ```
 ```
-RunScript(script.avrremote,command=POWER|TOGGLE)
+RunScript(script.avrremotecontrol,command=POWER|TOGGLE)
 ```
 ```
-RunScript(script.avrremote,command=POWER|QUERY)
+RunScript(script.avrremotecontrol,command=POWER|QUERY)
 ```
 ### Volume
 ```
-RunScript(script.avrremote,command=VOLUME|UP)
+RunScript(script.avrremotecontrol,command=VOLUME|UP)
 ```
 ```
-RunScript(script.avrremote,command=VOLUME|DOWN)
+RunScript(script.avrremotecontrol,command=VOLUME|DOWN)
 ```
 ```
-RunScript(script.avrremote,command=VOLUME|SET***,command=VOLUME_QUERY)
+RunScript(script.avrremotecontrol,command=VOLUME|SET***,command=VOLUME_QUERY)
 ```
 ```
-RunScript(script.avrremote,command=VOLUME|QUERY)
+RunScript(script.avrremotecontrol,command=VOLUME|QUERY)
 ```
 ### Mute
 ```
-RunScript(script.avrremote,command=MUTE|ON)
+RunScript(script.avrremotecontrol,command=MUTE|ON)
 ```
 ```
-RunScript(script.avrremote,command=MUTE|OFF)
+RunScript(script.avrremotecontrol,command=MUTE|OFF)
 ```
 ```
-RunScript(script.avrremote,command=MUTE|TOGGLE)
+RunScript(script.avrremotecontrol,command=MUTE|TOGGLE)
 ```
 ```
-RunScript(script.avrremote,command=MUTE|QUERY)
+RunScript(script.avrremotecontrol,command=MUTE|QUERY)
 ```
 ### Input(s)
 ```
-RunScript(script.avrremote,command=INPUT|CD)
+RunScript(script.avrremotecontrol,command=INPUT|CD)
 ```
 ```
-RunScript(script.avrremote,command=INPUT|CD,command=INPUT|DVD)
+RunScript(script.avrremotecontrol,command=INPUT|CD,command=INPUT|DVD)
 ```
 
 ## Service example commands
